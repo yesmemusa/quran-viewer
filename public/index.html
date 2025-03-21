@@ -4,8 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>READ QURAN EASILY (RQE)</title>
+    <!-- Add Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAF8WlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNy4yLWMwMDAgNzkuMWI2NWE3OWI0LCAyMDIyLzA2LzEzLTIyOjAxOjAxICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdEV2dD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlRXZlbnQjIiB4bWxuczpkYz0iaHR0cDovL3B1cmwub3JnL2RjL2VsZW1lbnRzLzEuMS8iIHhtbG5zOnBob3Rvc2hvcD0iaHR0cDovL25zLmFkb2JlLmNvbS9waG90b3Nob3AvMS4wLyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgMjQuMCAoTWFjaW50b3NoKSIgeG1wOkNyZWF0ZURhdGU9IjIwMjQtMDMtMTdUMTU6NDc6NDctMDQ6MDAiIHhtcDpNZXRhZGF0YURhdGU9IjIwMjQtMDMtMTdUMTU6NDc6NDctMDQ6MDAiIHhtcDpNb2RpZnlEYXRlPSIyMDI0LTAzLTE3VDE1OjQ3OjQ3LTA0OjAwIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjY5ZDlkMzE1LTFhZTAtNDc0ZS1hMzBkLTNlOGNjMzA3OWE1YyIgeG1wTU06RG9jdW1lbnRJRD0iYWRvYmU6ZG9jaWQ6cGhvdG9zaG9wOjY5ZDlkMzE1LTFhZTAtNDc0ZS1h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">
+    <link rel="icon" type="image/png" sizes="16x16" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAF8WlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNy4yLWMwMDAgNzkuMWI2NWE3OWI0LCAyMDIyLzA2LzEzLTIyOjAxOjAxICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdEV2dD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlRXZlbnQjIiB4bWxuczpkYz0iaHR0cDovL3B1cmwub3JnL2RjL2VsZW1lbnRzLzEuMS8iIHhtbG5zOnBob3Rvc2hvcD0iaHR0cDovL25zLmFkb2JlLmNvbS9waG90b3Nob3AvMS4wLyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgMjQuMCAoTWFjaW50b3NoKSIgeG1wOkNyZWF0ZURhdGU9IjIwMjQtMDMtMTdUMTU6NDc6NDctMDQ6MDAiIHhtcDpNZXRhZGF0YURhdGU9IjIwMjQtMDMtMTdUMTU6NDc6NDctMDQ6MDAiIHhtcDpNb2RpZnlEYXRlPSIyMDI0LTAzLTE3VDE1OjQ3OjQ3LTA0OjAwIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjY5ZDlkMzE1LTFhZTAtNDc0ZS1hMzBkLTNlOGNjMzA3OWE1YyIgeG1wTU06RG9jdW1lbnRJRD0iYWRvYmU6ZG9jaWQ6cGhvdG9zaG9wOjY5ZDlkMzE1LTFhZTAtNDc0ZS1h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">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="a.ico">
+ 
+    
+    
+    
     <style>
         @font-face {
             font-family: 'ArabicFont';
@@ -94,8 +102,44 @@
             transition: var(--hover-transition);
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 15px;
             background: rgba(255, 255, 255, 0.1);
+        }
+
+        .navbar-brand .logo-icon {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+        }
+
+        .navbar-brand .logo-icon i.fa-book-quran {
+            font-size: 2rem;
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar-brand .logo-icon i.fa-star {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            font-size: 0.9rem;
+            color: gold;
+            animation: shine 2s infinite;
+        }
+
+        @keyframes shine {
+            0% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+            100% { opacity: 0.5; transform: scale(1); }
+        }
+
+        .navbar-brand .logo-text {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            border-left: 2px solid rgba(255, 255, 255, 0.2);
+            padding-left: 15px;
         }
 
         .navbar-brand:hover {
@@ -1371,6 +1415,68 @@
             border: 1px solid var(--border-color);
         }
 
+        /* Footer Styles */
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            text-align: center;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer.show {
+            display: flex;
+        }
+
+        .footer span {
+            font-size: 1rem;
+            opacity: 0.9;
+            letter-spacing: 0.5px;
+        }
+
+        .footer i {
+            font-size: 1.2rem;
+            color: gold;
+            margin: 0 5px;
+        }
+
+        .footer .creator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: var(--hover-transition);
+        }
+
+        .footer .creator:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .footer {
+                padding: 10px;
+            }
+
+            .footer span {
+                font-size: 0.9rem;
+            }
+
+            .footer i {
+                font-size: 1rem;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -1379,9 +1485,8 @@
     <div class="navbar">
         <div class="navbar-brand">
             <div class="logo-icon">
-                <i class="fas fa-book-reader"></i>
-
-
+                <i class="fas fa-book-quran"></i>
+                <i class="fas fa-star"></i>
             </div>
             <div class="logo-text">
                 <span>READ QURAN EASILY</span>
@@ -1597,6 +1702,14 @@
                     </ul>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer" id="footer">
+        <div class="creator">
+            <span>Made by Musa</span>
+            <i class="fas fa-crown"></i>
         </div>
     </div>
 
@@ -1865,12 +1978,14 @@
             if (!surahNumber) {
                 quranContainer.style.display = "none";
                 messageContainer.style.display = "flex";
+                toggleFooter(true);  // Show footer when no surah selected
                 return;
             }
 
             quranContainer.innerHTML = "";
             quranContainer.style.display = "block";
             messageContainer.style.display = "none";
+            toggleFooter(false);  // Hide footer when surah is selected
 
             if (surahNumber && quranData[surahNumber]) {
                 let verses = quranData[surahNumber];
@@ -2374,6 +2489,19 @@
                 document.getElementById('instructionsModal').classList.remove('show');
             }
         });
+
+        // Add this to your existing JavaScript
+        function toggleFooter(show) {
+            const footer = document.getElementById('footer');
+            if (show) {
+                footer.classList.add('show');
+            } else {
+                footer.classList.remove('show');
+            }
+        }
+
+        // Show footer initially when page loads
+        toggleFooter(true);
 
     </script>
 
