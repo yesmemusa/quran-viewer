@@ -254,6 +254,7 @@
             box-shadow: var(--card-shadow);
             transition: var(--hover-transition);
             border: 1px solid var(--border-color);
+            cursor: default;
         }
 
         .verse:hover {
@@ -331,8 +332,6 @@
             border: 1px solid var(--border-color);
             transform-origin: top right;
             animation: scaleIn 0.2s ease;
-            scrollbar-width: thin;
-            scrollbar-color: var(--primary-color) var(--verse-bg);
         }
 
         /* Custom scrollbar for Webkit browsers */
@@ -579,21 +578,244 @@
 
         /* Responsive Design */
         @media (max-width: 768px) {
+            body {
+                padding-top: 160px;
+            }
+
             .navbar {
-                padding: 10px;
+                padding: 10px 5px;
+                gap: 8px;
+                flex-direction: column;
             }
 
             .navbar-brand {
+                width: 100%;
                 font-size: 1.2rem;
+                margin-bottom: 5px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
             }
 
-            .navbar select, .navbar input {
-                padding: 8px 12px;
+            .navbar select {
+                width: 100%;
+                max-width: 300px;
+                padding: 12px;
+                font-size: 16px;
+            }
+
+            .font-size-control {
+                width: 100%;
+                max-width: 300px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 12px;
+            }
+
+            .font-size-control label {
+                font-size: 14px;
+                min-width: 90px;
+            }
+
+            .font-size-slider {
+                width: 120px;
+            }
+
+            .toggle-container {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+                padding: 12px;
+            }
+
+            .theme-controls {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+                padding: 12px;
+            }
+
+            .bookmark-btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+                padding: 12px;
             }
 
             .container {
                 width: 95%;
+                padding: 10px;
+                margin-top: 10px;
+            }
+
+            .verse {
+                cursor: pointer;
+                position: relative;
+            }
+
+            .verse::after {
+                content: 'Tap for options';
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                font-size: 12px;
+                color: var(--text-color);
+                opacity: 0.7;
+                pointer-events: none;
+            }
+
+            .verse-options {
+                display: none;
+            }
+
+            .options-menu {
+                position: fixed;
+                top: auto;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                width: 100%;
+                max-height: 70vh;
+                border-radius: 20px 20px 0 0;
+                transform-origin: bottom center;
+                animation: slideUp 0.3s ease;
+                padding: 20px 0;
+                border: none;
+                box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.2);
+                z-index: 1000;
+            }
+
+            .options-menu::before {
+                content: '';
+                position: absolute;
+                top: 8px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 40px;
+                height: 4px;
+                background: var(--border-color);
+                border-radius: 2px;
+            }
+
+            .options-menu-item {
+                padding: 16px 24px;
+                font-size: 16px;
+            }
+
+            .options-menu-item i {
+                font-size: 18px;
+                width: 24px;
+            }
+
+            .options-menu.show::after {
+                content: '';
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: -1;
+            }
+
+            @keyframes slideUp {
+                from {
+                    transform: translateY(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateY(0);
+                    opacity: 1;
+                }
+            }
+
+            .arabic {
+                font-size: 22px !important;
+                line-height: 2;
+                margin: 15px 0;
+            }
+
+            .translation {
+                font-size: 16px !important;
+                padding: 12px;
+                line-height: 1.6;
+            }
+
+            .verse-number {
+                font-size: 12px;
+                padding: 5px 10px;
+            }
+
+            /* Modal Improvements */
+            .screenshot-content,
+            .share-content,
+            .bookmarks-content {
+                width: 95%;
+                padding: 20px;
+                max-height: 80vh;
+            }
+
+            .share-options {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .share-option {
                 padding: 15px;
+                justify-content: center;
+            }
+
+            .bookmarked-verse {
+                padding: 15px;
+            }
+
+            .bookmark-info {
+                flex-direction: column;
+                gap: 5px;
+                align-items: flex-start;
+            }
+
+            .bookmark-info span {
+                font-size: 14px;
+            }
+        }
+
+        /* Small phones */
+        @media (max-width: 380px) {
+            body {
+                padding-top: 180px;
+            }
+
+            .navbar {
+                padding: 8px 3px;
+            }
+
+            .font-size-control label {
+                font-size: 12px;
+                min-width: 80px;
+            }
+
+            .font-size-slider {
+                width: 100px;
+            }
+
+            .verse {
+                padding: 12px;
+                margin: 12px 0;
+            }
+
+            .verse::after {
+                font-size: 11px;
+            }
+
+            .arabic {
+                font-size: 20px !important;
+            }
+
+            .translation {
+                font-size: 14px !important;
+                padding: 10px;
             }
         }
 
@@ -695,6 +917,59 @@
             align-items: center;
             margin-bottom: 10px;
             color: var(--text-color);
+        }
+
+        .mobile-blocker {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-color);
+            z-index: 9999;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .mobile-blocker i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .mobile-blocker h2 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .mobile-blocker p {
+            font-size: 1rem;
+            max-width: 300px;
+            margin: 0 auto;
+            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        @media (max-width: 768px) {
+            .mobile-blocker {
+                display: flex;
+            }
+            
+            /* Hide all other content on mobile */
+            .navbar,
+            .container,
+            .message-container,
+            .screenshot-container,
+            .share-modal,
+            .bookmarks-modal {
+                display: none !important;
+            }
         }
     </style>
 </head>
@@ -802,6 +1077,12 @@
             </div>
             <div id="bookmarksList"></div>
         </div>
+    </div>
+
+    <div class="mobile-blocker">
+        <i class="fas fa-desktop"></i>
+        <h2>Desktop Only</h2>
+        <p>This Quran viewer is optimized for desktop viewing. Please access it from a computer or laptop for the best experience.</p>
     </div>
 
     <script>
@@ -1070,16 +1351,34 @@
                     verseDiv.appendChild(verseNumber);
                     quranContainer.appendChild(verseDiv);
 
-                    // Add click event for options menu
+                    // Add click event for mobile
+                    verseDiv.addEventListener("click", function(e) {
+                        // Only handle click if we're on mobile (screen width <= 768px)
+                        if (window.innerWidth <= 768) {
+                            e.stopPropagation();
+                            // Close all other menus
+                            document.querySelectorAll('.options-menu.show').forEach(menu => {
+                                if (menu !== optionsMenu) {
+                                    menu.classList.remove('show');
+                                }
+                            });
+                            optionsMenu.classList.toggle('show');
+                        }
+                    });
+
+                    // Add click event for options menu (desktop)
                     optionsDiv.addEventListener("click", function(e) {
-                        e.stopPropagation();
-                        // Close all other menus
-                        document.querySelectorAll('.options-menu.show').forEach(menu => {
-                            if (menu !== optionsMenu) {
-                                menu.classList.remove('show');
-                            }
-                        });
-                        optionsMenu.classList.toggle('show');
+                        // Only handle click if we're on desktop (screen width > 768px)
+                        if (window.innerWidth > 768) {
+                            e.stopPropagation();
+                            // Close all other menus
+                            document.querySelectorAll('.options-menu.show').forEach(menu => {
+                                if (menu !== optionsMenu) {
+                                    menu.classList.remove('show');
+                                }
+                            });
+                            optionsMenu.classList.toggle('show');
+                        }
                     });
 
                     // Handle menu item clicks
