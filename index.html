@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quran Viewer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @font-face {
+            font-family: 'ArabicFont';
+            src: url('a.ttf') format('truetype');
+        }
+
+        @font-face {
+            font-family: 'TranslationFont';
+            src: url('b.ttf') format('truetype');
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Enhanced Theme Variables */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --text-color: #2c3e50;
+            --bg-color: #f5f7fa;
+            --container-bg: #ffffff;
+            --verse-bg: #f8f9fa;
+            --border-color: #eee;
+            --arabic-color: #1a5f7a;
+            --translation-color: #2c3e50;
+            --highlight-color: rgba(255, 255, 0, 0.3);
+            --menu-hover: #f8f9fa;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --success-color: #28a745;
+            --hover-transition: all 0.3s ease;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --hover-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Enhanced Dark Mode */
+        [data-theme="dark"] {
+            --primary-color: #1a1a2e;
+            --secondary-color: #16213e;
+            --text-color: #e6e6e6;
+            --bg-color: #121212;
+            --container-bg: #1e1e1e;
+            --verse-bg: #2d2d2d;
+            --border-color: #333;
+            --arabic-color: #4a9eff;
+            --translation-color: #e6e6e6;
+            --highlight-color: rgba(255, 255, 0, 0.15);
+            --menu-hover: #2d2d2d;
+            --shadow-color: rgba(0, 0, 0, 0.3);
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            --hover-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-color);
+            min-height: 100vh;
+            padding-top: 80px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        /* Enhanced Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 15px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            box-shadow: var(--card-shadow);
+            z-index: 1000;
+        }
+
+        .navbar-brand {
+            position: relative;
+            padding: 8px 15px;
+            border-radius: 8px;
+            transition: var(--hover-transition);
+        }
+
+        .navbar-brand:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .navbar-brand i {
+            font-size: 2.2rem;
+            margin-right: 10px;
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar select, .navbar input {
+            padding: 10px 15px;
+            font-size: 14px;
+            border: none;
+            border-radius: 8px;
+            outline: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .navbar select:hover, .navbar input:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .navbar select option {
+            background: #002850;
+            color: white;
+        }
+
+        /* Enhanced Controls */
+        .font-size-control, .toggle-container, .search-container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 10px 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: var(--hover-transition);
+        }
+
+        .font-size-control:hover, .toggle-container:hover, .search-container:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .font-size-control label {
+            white-space: nowrap;
+        }
+
+        .font-size-slider {
+            -webkit-appearance: none;
+            width: 100px;
+            height: 4px;
+            border-radius: 2px;
+            background: rgba(255, 255, 255, 0.3);
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .font-size-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .font-size-slider::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .font-size-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+        }
+
+        .font-size-slider::-moz-range-thumb:hover {
+            transform: scale(1.1);
+        }
+
+        .font-size-value {
+            min-width: 40px;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            font-size: 14px;
+        }
+
+        .toggle-container input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        /* Message Container */
+        .message-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 70vh;
+        }
+
+        .message {
+            font-size: 24px;
+            color: #666;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .message i {
+            font-size: 2rem;
+            color: #002850;
+        }
+
+        /* Quran Content Container */
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin: auto;
+            background: var(--container-bg);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            display: none;
+        }
+
+        .verse {
+            margin: 20px 0;
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            background: var(--container-bg);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+            box-shadow: var(--card-shadow);
+            transition: var(--hover-transition);
+            border: 1px solid var(--border-color);
+        }
+
+        .verse:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .verse-number {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: var(--verse-bg);
+            color: var(--text-color);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            margin-top: 15px;
+            box-shadow: 0 2px 4px var(--shadow-color);
+        }
+
+        .verse-number i {
+            font-size: 12px;
+            color: var(--arabic-color);
+        }
+
+        .verse-end-symbol {
+            display: inline-block;
+            color: #1a5f7a;
+            font-size: 24px;
+            margin: 0 5px;
+            font-family: 'ArabicFont', sans-serif;
+            vertical-align: middle;
+        }
+
+        .verse.bookmarked .verse-number {
+            background: #e3f2fd;
+            color: #002850;
+        }
+
+        .verse-options {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            cursor: pointer;
+            color: var(--text-color);
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--hover-transition);
+            background: var(--verse-bg);
+        }
+
+        .verse-options:hover {
+            background: var(--menu-hover);
+            transform: scale(1.1);
+        }
+
+        .options-menu {
+            position: absolute;
+            top: 45px;
+            right: 0;
+            background: var(--container-bg);
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            padding: 8px 0;
+            display: none;
+            z-index: 100;
+            min-width: 200px;
+            max-height: 250px;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+            transform-origin: top right;
+            animation: scaleIn 0.2s ease;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary-color) var(--verse-bg);
+        }
+
+        /* Custom scrollbar for Webkit browsers */
+        .options-menu::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .options-menu::-webkit-scrollbar-track {
+            background: var(--verse-bg);
+            border-radius: 0 12px 12px 0;
+        }
+
+        .options-menu::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 20px;
+            border: 2px solid var(--verse-bg);
+        }
+
+        .options-menu::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary-color);
+        }
+
+        .options-menu.show {
+            display: block;
+        }
+
+        .options-menu-item {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--text-color);
+        }
+
+        .options-menu-item:hover {
+            background: var(--verse-bg);
+            padding-left: 25px;
+        }
+
+        .options-menu-item i {
+            color: var(--primary-color);
+            width: 20px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .options-menu-item.copy-success {
+            color: #28a745;
+        }
+
+        .options-menu-item.copy-success i {
+            color: #28a745;
+        }
+
+        .arabic {
+            color: var(--arabic-color);
+            direction: rtl;
+            font-weight: bold;
+            font-family: 'ArabicFont', sans-serif;
+            line-height: 2.2;
+            margin: 20px 0;
+            text-shadow: 0 1px 2px var(--shadow-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .translation {
+            color: var(--translation-color);
+            margin-top: 15px;
+            font-family: 'TranslationFont', sans-serif;
+            line-height: 1.8;
+            padding: 15px;
+            background: var(--verse-bg);
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        /* Hide translations when disabled */
+        .hide-translation {
+            display: none;
+        }
+
+        /* Screenshot Container */
+        .screenshot-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .screenshot-container.show {
+            display: flex;
+        }
+
+        .screenshot-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .screenshot-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            color: #666;
+            font-size: 1.5rem;
+        }
+
+        .screenshot-actions {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .screenshot-btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .download-btn {
+            background: #002850;
+            color: white;
+        }
+
+        .download-btn:hover {
+            background: #004e98;
+        }
+
+        /* Share Modal */
+        .share-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .share-modal.show {
+            display: flex;
+        }
+
+        .share-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 90%;
+            width: 400px;
+            position: relative;
+        }
+
+        .share-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            color: #666;
+            font-size: 1.5rem;
+        }
+
+        .share-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .share-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .share-option:hover {
+            background: #f8f9fa;
+            border-color: #002850;
+        }
+
+        .share-option i {
+            color: #002850;
+        }
+
+        /* Theme Controls */
+        .theme-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+        }
+
+        .theme-btn {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: var(--hover-transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.1) rotate(15deg);
+        }
+
+        .theme-btn.active {
+            border-color: #fff;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 10px;
+            }
+
+            .navbar-brand {
+                font-size: 1.2rem;
+            }
+
+            .navbar select, .navbar input {
+                padding: 8px 12px;
+            }
+
+            .container {
+                width: 95%;
+                padding: 15px;
+            }
+        }
+
+        /* Add bookmark button to navbar */
+        .bookmark-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 10px;
+            padding: 10px 20px;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--hover-transition);
+        }
+
+        .bookmark-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .bookmark-btn i {
+            font-size: 1.2rem;
+        }
+
+        /* Bookmarks modal */
+        .bookmarks-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .bookmarks-modal.show {
+            display: flex;
+        }
+
+        .bookmarks-content {
+            background: var(--container-bg);
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 90%;
+            width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .bookmarks-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .bookmarks-header h3 {
+            color: var(--text-color);
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        .bookmarks-close {
+            cursor: pointer;
+            color: var(--text-color);
+            font-size: 1.5rem;
+            padding: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .bookmarks-close:hover {
+            transform: rotate(90deg);
+        }
+
+        .bookmarked-verse {
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            background: var(--verse-bg);
+            cursor: pointer;
+            transition: var(--hover-transition);
+        }
+
+        .bookmarked-verse:hover {
+            transform: translateX(10px);
+        }
+
+        .bookmark-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            color: var(--text-color);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Fixed Navbar -->
+    <div class="navbar">
+        <div class="navbar-brand">
+            <i class="fas fa-book-quran"></i>
+            <span>Quran Viewer</span>
+        </div>
+        <label style="color: white;">Surah:</label>
+        <select id="surahSelect"></select>
+
+        <div class="font-size-control">
+            <label>Arabic Size:</label>
+            <input type="range" class="font-size-slider" id="arabicFontSize" min="16" max="48" value="24">
+            <span class="font-size-value" id="arabicFontValue">24px</span>
+        </div>
+
+        <div class="font-size-control">
+            <label>Translation Size:</label>
+            <input type="range" class="font-size-slider" id="translationFontSize" min="12" max="36" value="18">
+            <span class="font-size-value" id="translationFontValue">18px</span>
+        </div>
+
+        <div class="toggle-container">
+            <i class="fas fa-language"></i>
+            <label>Show Translation</label>
+            <input type="checkbox" id="toggleTranslation" checked>
+        </div>
+
+        <div class="theme-controls">
+            <button class="theme-btn" data-theme="light" style="background: #f5f7fa;">
+                <i class="fas fa-sun" style="color: #2c3e50;"></i>
+            </button>
+            <button class="theme-btn" data-theme="dark" style="background: #121212;">
+                <i class="fas fa-moon" style="color: #e6e6e6;"></i>
+            </button>
+        </div>
+
+        <button class="bookmark-btn" id="showBookmarks">
+            <i class="fas fa-bookmark"></i>
+            <span>Bookmarks</span>
+        </button>
+    </div>
+
+    <!-- Centered Message -->
+    <div class="message-container" id="messageContainer">
+        <div class="message">
+            <i class="fas fa-hand-pointer"></i>
+            Please select any Surah
+        </div>
+    </div>
+
+    <!-- Quran Content -->
+    <div class="container" id="quranContainer"></div>
+
+    <!-- Screenshot Container -->
+    <div class="screenshot-container" id="screenshotContainer">
+        <div class="screenshot-content" id="screenshotContent">
+            <i class="fas fa-times screenshot-close" id="closeScreenshot"></i>
+            <div id="screenshotText"></div>
+            <div class="screenshot-actions">
+                <button class="screenshot-btn download-btn" id="downloadScreenshot">
+                    <i class="fas fa-download"></i>
+                    Download
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Share Modal -->
+    <div class="share-modal" id="shareModal">
+        <div class="share-content">
+            <i class="fas fa-times share-close" id="closeShare"></i>
+            <h3 style="margin-bottom: 15px;">Share Ayah</h3>
+            <div class="share-options">
+                <div class="share-option" data-share="whatsapp">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>WhatsApp</span>
+                </div>
+                <div class="share-option" data-share="facebook">
+                    <i class="fab fa-facebook"></i>
+                    <span>Facebook</span>
+                </div>
+                <div class="share-option" data-share="twitter">
+                    <i class="fab fa-twitter"></i>
+                    <span>Twitter</span>
+                </div>
+                <div class="share-option" data-share="copy">
+                    <i class="fas fa-link"></i>
+                    <span>Copy Link</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add bookmarks modal -->
+    <div class="bookmarks-modal" id="bookmarksModal">
+        <div class="bookmarks-content">
+            <div class="bookmarks-header">
+                <h3>Bookmarked Verses</h3>
+                <i class="fas fa-times bookmarks-close" id="closeBookmarks"></i>
+            </div>
+            <div id="bookmarksList"></div>
+        </div>
+    </div>
+
+    <script>
+        let quranData = {};
+        let translationData = {};
+
+        // Surah names mapping
+        const surahNames = {
+            "1": "Al-Fatiha",
+            "2": "Al-Baqarah",
+            "3": "Aal-Imran",
+            "4": "An-Nisa",
+            "5": "Al-Maidah",
+            "6": "Al-An'am",
+            "7": "Al-A'raf",
+            "8": "Al-Anfal",
+            "9": "At-Tawbah",
+            "10": "Yunus",
+            "11": "Hud",
+            "12": "Yusuf",
+            "13": "Ar-Ra'd",
+            "14": "Ibrahim",
+            "15": "Al-Hijr",
+            "16": "An-Nahl",
+            "17": "Al-Isra",
+            "18": "Al-Kahf",
+            "19": "Maryam",
+            "20": "Ta-Ha",
+            "21": "Al-Anbiya",
+            "22": "Al-Hajj",
+            "23": "Al-Mu'minun",
+            "24": "An-Nur",
+            "25": "Al-Furqan",
+            "26": "Ash-Shu'ara",
+            "27": "An-Naml",
+            "28": "Al-Qasas",
+            "29": "Al-Ankabut",
+            "30": "Ar-Rum",
+            "31": "Luqman",
+            "32": "As-Sajdah",
+            "33": "Al-Ahzab",
+            "34": "Saba",
+            "35": "Fatir",
+            "36": "Ya-Sin",
+            "37": "As-Saffat",
+            "38": "Sad",
+            "39": "Az-Zumar",
+            "40": "Ghafir",
+            "41": "Fussilat",
+            "42": "Ash-Shura",
+            "43": "Az-Zukhruf",
+            "44": "Ad-Dukhan",
+            "45": "Al-Jathiyah",
+            "46": "Al-Ahqaf",
+            "47": "Muhammad",
+            "48": "Al-Fath",
+            "49": "Al-Hujurat",
+            "50": "Qaf",
+            "51": "Adh-Dhariyat",
+            "52": "At-Tur",
+            "53": "An-Najm",
+            "54": "Al-Qamar",
+            "55": "Ar-Rahman",
+            "56": "Al-Waqi'ah",
+            "57": "Al-Hadid",
+            "58": "Al-Mujadilah",
+            "59": "Al-Hashr",
+            "60": "Al-Mumtahanah",
+            "61": "As-Saff",
+            "62": "Al-Jumu'ah",
+            "63": "Al-Munafiqun",
+            "64": "At-Taghabun",
+            "65": "At-Talaq",
+            "66": "At-Tahrim",
+            "67": "Al-Mulk",
+            "68": "Al-Qalam",
+            "69": "Al-Haqqah",
+            "70": "Al-Ma'arij",
+            "71": "Nuh",
+            "72": "Al-Jinn",
+            "73": "Al-Muzzammil",
+            "74": "Al-Muddaththir",
+            "75": "Al-Qiyamah",
+            "76": "Al-Insan",
+            "77": "Al-Mursalat",
+            "78": "An-Naba",
+            "79": "An-Nazi'at",
+            "80": "Abasa",
+            "81": "At-Takwir",
+            "82": "Al-Infitar",
+            "83": "Al-Mutaffifin",
+            "84": "Al-Inshiqaq",
+            "85": "Al-Buruj",
+            "86": "At-Tariq",
+            "87": "Al-A'la",
+            "88": "Al-Ghashiyah",
+            "89": "Al-Fajr",
+            "90": "Al-Balad",
+            "91": "Ash-Shams",
+            "92": "Al-Lail",
+            "93": "Ad-Duha",
+            "94": "Ash-Sharh",
+            "95": "At-Tin",
+            "96": "Al-Alaq",
+            "97": "Al-Qadr",
+            "98": "Al-Bayyinah",
+            "99": "Az-Zalzalah",
+            "100": "Al-Adiyat",
+            "101": "Al-Qari'ah",
+            "102": "At-Takathur",
+            "103": "Al-Asr",
+            "104": "Al-Humazah",
+            "105": "Al-Fil",
+            "106": "Quraish",
+            "107": "Al-Ma'un",
+            "108": "Al-Kawthar",
+            "109": "Al-Kafirun",
+            "110": "An-Nasr",
+            "111": "Al-Masad",
+            "112": "Al-Ikhlas",
+            "113": "Al-Falaq",
+            "114": "An-Nas"
+        };
+
+        // Fetch Quran JSON and Translation JSON
+        Promise.all([
+            fetch('quran.json').then(response => response.json()),
+            fetch('tarjuma.json').then(response => response.json())
+        ]).then(([quran, translation]) => {
+            quranData = quran;
+            translationData = translation;
+            populateSurahDropdown();
+        }).catch(error => console.error('Error loading JSON files:', error));
+
+        function populateSurahDropdown() {
+            let surahSelect = document.getElementById("surahSelect");
+            surahSelect.innerHTML = '<option value="">Select a Surah</option>';
+
+            for (let surah in quranData) {
+                let option = document.createElement("option");
+                option.value = surah;
+                option.textContent = `${surah}. ${surahNames[surah]}`;
+                surahSelect.appendChild(option);
+            }
+        }
+
+        document.getElementById("surahSelect").addEventListener("change", function () {
+            displaySurah(this.value);
+        });
+
+        function displaySurah(surahNumber) {
+            let quranContainer = document.getElementById("quranContainer");
+            let messageContainer = document.getElementById("messageContainer");
+
+            if (!surahNumber) {
+                quranContainer.style.display = "none";
+                messageContainer.style.display = "flex";
+                return;
+            }
+
+            quranContainer.innerHTML = "";
+            quranContainer.style.display = "block";
+            messageContainer.style.display = "none";
+
+            if (surahNumber && quranData[surahNumber]) {
+                let verses = quranData[surahNumber];
+                let translations = translationData[surahNumber] || [];
+
+                verses.forEach((verse, index) => {
+                    let verseDiv = document.createElement("div");
+                    verseDiv.classList.add("verse");
+
+                    // Add three dots menu
+                    let optionsDiv = document.createElement("div");
+                    optionsDiv.classList.add("verse-options");
+                    optionsDiv.innerHTML = '<i class="fas fa-ellipsis-v"></i>';
+                    
+                    // Create options menu
+                    let optionsMenu = document.createElement("div");
+                    optionsMenu.classList.add("options-menu");
+                    optionsMenu.innerHTML = `
+                        <div class="options-menu-item" data-action="screenshot">
+                            <i class="fas fa-camera"></i>
+                            <span>Screenshot Ayah</span>
+                        </div>
+                        <div class="options-menu-item" data-action="copy-arabic">
+                            <i class="fas fa-copy"></i>
+                            <span>Copy Arabic Text</span>
+                        </div>
+                        <div class="options-menu-item" data-action="copy-translation">
+                            <i class="fas fa-copy"></i>
+                            <span>Copy Translation</span>
+                        </div>
+                        <div class="options-menu-item" data-action="share">
+                            <i class="fas fa-share-alt"></i>
+                            <span>Share Ayah</span>
+                        </div>
+                        <div class="options-menu-item" data-action="bookmark">
+                            <i class="fas fa-bookmark"></i>
+                            <span>Bookmark Ayah</span>
+                        </div>
+                    `;
+
+                    optionsDiv.appendChild(optionsMenu);
+
+                    let arabicText = document.createElement("div");
+                    arabicText.classList.add("arabic");
+                    arabicText.style.fontSize = document.getElementById("arabicFontSize").value + "px";
+                    arabicText.innerHTML = `${verse.text} <span class="verse-end-symbol">۝</span>`;
+
+                    let translationText = document.createElement("div");
+                    translationText.classList.add("translation");
+                    translationText.style.fontSize = document.getElementById("translationFontSize").value + "px";
+                    translationText.textContent = translations[index]?.text || "Translation not available";
+
+                    // Add verse number
+                    let verseNumber = document.createElement("div");
+                    verseNumber.classList.add("verse-number");
+                    verseNumber.innerHTML = `<i class="fas fa-bookmark"></i> Ayah ${index + 1}`;
+
+                    verseDiv.appendChild(optionsDiv);
+                    verseDiv.appendChild(arabicText);
+                    verseDiv.appendChild(translationText);
+                    verseDiv.appendChild(verseNumber);
+                    quranContainer.appendChild(verseDiv);
+
+                    // Add click event for options menu
+                    optionsDiv.addEventListener("click", function(e) {
+                        e.stopPropagation();
+                        // Close all other menus
+                        document.querySelectorAll('.options-menu.show').forEach(menu => {
+                            if (menu !== optionsMenu) {
+                                menu.classList.remove('show');
+                            }
+                        });
+                        optionsMenu.classList.toggle('show');
+                    });
+
+                    // Handle menu item clicks
+                    optionsMenu.querySelectorAll('.options-menu-item').forEach(item => {
+                        item.addEventListener("click", function() {
+                            const action = this.dataset.action;
+                            switch(action) {
+                                case 'screenshot':
+                                    showScreenshot(arabicText.textContent, translationText.textContent);
+                                    break;
+                                case 'copy-arabic':
+                                    copyText(arabicText.textContent, this);
+                                    break;
+                                case 'copy-translation':
+                                    copyText(translationText.textContent, this);
+                                    break;
+                                case 'share':
+                                    showShareModal(arabicText.textContent, translationText.textContent);
+                                    break;
+                                case 'bookmark':
+                                    toggleBookmark(verseDiv, this);
+                                    break;
+                            }
+                            optionsMenu.classList.remove('show');
+                        });
+                    });
+
+                    // Check if verse is bookmarked
+                    const key = `${surahNumber}:${index + 1}`;
+                    if (bookmarkedVerses[key]) {
+                        verseDiv.classList.add('bookmarked');
+                        const bookmarkMenuItem = verseDiv.querySelector('[data-action="bookmark"]');
+                        if (bookmarkMenuItem) {
+                            bookmarkMenuItem.innerHTML = '<i class="fas fa-bookmark"></i><span>Remove Bookmark</span>';
+                        }
+                    }
+                });
+
+                // Close menu when clicking outside
+                document.addEventListener("click", function() {
+                    document.querySelectorAll('.options-menu.show').forEach(menu => {
+                        menu.classList.remove('show');
+                    });
+                });
+
+                updateTranslationVisibility();
+            }
+        }
+
+        // Toggle translation visibility
+        document.getElementById("toggleTranslation").addEventListener("change", function () {
+            updateTranslationVisibility();
+        });
+
+        function updateTranslationVisibility() {
+            let showTranslation = document.getElementById("toggleTranslation").checked;
+            document.querySelectorAll(".translation").forEach(el => {
+                el.style.display = showTranslation ? "block" : "none";
+            });
+        }
+
+        // Change Font Sizes Dynamically
+        document.getElementById("arabicFontSize").addEventListener("input", function () {
+            const value = this.value + "px";
+            document.getElementById("arabicFontValue").textContent = value;
+            document.querySelectorAll(".arabic").forEach(el => el.style.fontSize = value);
+        });
+
+        document.getElementById("translationFontSize").addEventListener("input", function () {
+            const value = this.value + "px";
+            document.getElementById("translationFontValue").textContent = value;
+            document.querySelectorAll(".translation").forEach(el => el.style.fontSize = value);
+        });
+
+        // Initialize font size values
+        document.getElementById("arabicFontValue").textContent = document.getElementById("arabicFontSize").value + "px";
+        document.getElementById("translationFontValue").textContent = document.getElementById("translationFontSize").value + "px";
+
+        // Screenshot functionality
+        function showScreenshot(arabicText, translationText) {
+            const container = document.getElementById("screenshotContainer");
+            const content = document.getElementById("screenshotText");
+            content.innerHTML = `
+                <div class="arabic" style="font-size: 32px; margin-bottom: 20px;">${arabicText}</div>
+                <div class="translation" style="font-size: 18px;">${translationText}</div>
+            `;
+            container.classList.add("show");
+        }
+
+        // Close screenshot
+        document.getElementById("closeScreenshot").addEventListener("click", function() {
+            document.getElementById("screenshotContainer").classList.remove("show");
+        });
+
+        // Download screenshot
+        document.getElementById("downloadScreenshot").addEventListener("click", function() {
+            const content = document.getElementById("screenshotContent");
+            html2canvas(content).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'ayah-screenshot.png';
+                link.href = canvas.toDataURL();
+                link.click();
+            });
+        });
+
+        // Add html2canvas library
+        const script = document.createElement('script');
+        script.src = 'https://html2canvas.hertzen.com/dist/html2canvas.min.js';
+        document.head.appendChild(script);
+
+        // Copy text functionality
+        function copyText(text, element) {
+            navigator.clipboard.writeText(text).then(() => {
+                const originalContent = element.innerHTML;
+                element.innerHTML = '<i class="fas fa-check"></i><span>Copied!</span>';
+                element.classList.add('copy-success');
+                setTimeout(() => {
+                    element.innerHTML = originalContent;
+                    element.classList.remove('copy-success');
+                }, 2000);
+            });
+        }
+
+        // Share functionality
+        function showShareModal(arabicText, translationText) {
+            const modal = document.getElementById("shareModal");
+            modal.classList.add("show");
+        }
+
+        // Close share modal
+        document.getElementById("closeShare").addEventListener("click", function() {
+            document.getElementById("shareModal").classList.remove("show");
+        });
+
+        // Handle share options
+        document.querySelectorAll('.share-option').forEach(option => {
+            option.addEventListener("click", function() {
+                const shareType = this.dataset.share;
+                const arabicText = document.querySelector('.arabic').textContent;
+                const translationText = document.querySelector('.translation').textContent;
+                const text = `${arabicText}\n\n${translationText}`;
+                const url = encodeURIComponent(window.location.href);
+
+                switch(shareType) {
+                    case 'whatsapp':
+                        window.open(`https://wa.me/?text=${encodeURIComponent(text)}`);
+                        break;
+                    case 'facebook':
+                        window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`);
+                        break;
+                    case 'twitter':
+                        window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${url}`);
+                        break;
+                    case 'copy':
+                        copyText(window.location.href, this);
+                        break;
+                }
+            });
+        });
+
+        // Initialize bookmarks from localStorage
+        let bookmarkedVerses = JSON.parse(localStorage.getItem('bookmarkedVerses')) || {};
+
+        // Update bookmark functionality
+        function toggleBookmark(verseDiv, element) {
+            const surahNumber = document.getElementById('surahSelect').value;
+            const verseNumber = verseDiv.querySelector('.verse-number').textContent.match(/\d+/)[0];
+            const arabicText = verseDiv.querySelector('.arabic').textContent;
+            const translationText = verseDiv.querySelector('.translation').textContent;
+            const key = `${surahNumber}:${verseNumber}`;
+            
+            const isBookmarked = verseDiv.classList.contains('bookmarked');
+            if (isBookmarked) {
+                verseDiv.classList.remove('bookmarked');
+                element.innerHTML = '<i class="fas fa-bookmark"></i><span>Bookmark Ayah</span>';
+                delete bookmarkedVerses[key];
+            } else {
+                verseDiv.classList.add('bookmarked');
+                element.innerHTML = '<i class="fas fa-bookmark"></i><span>Remove Bookmark</span>';
+                bookmarkedVerses[key] = {
+                    surah: surahNumber,
+                    verse: verseNumber,
+                    surahName: surahNames[surahNumber],
+                    arabicText,
+                    translationText
+                };
+            }
+            
+            localStorage.setItem('bookmarkedVerses', JSON.stringify(bookmarkedVerses));
+        }
+
+        // Show bookmarks modal
+        document.getElementById('showBookmarks').addEventListener('click', function() {
+            const bookmarksList = document.getElementById('bookmarksList');
+            bookmarksList.innerHTML = '';
+            
+            if (Object.keys(bookmarkedVerses).length === 0) {
+                bookmarksList.innerHTML = '<p style="text-align: center; color: var(--text-color);">No bookmarked verses yet</p>';
+                return;
+            }
+            
+            for (const key in bookmarkedVerses) {
+                const verse = bookmarkedVerses[key];
+                const bookmarkDiv = document.createElement('div');
+                bookmarkDiv.classList.add('bookmarked-verse');
+                bookmarkDiv.innerHTML = `
+                    <div class="bookmark-info">
+                        <span>${verse.surahName} - Verse ${verse.verse}</span>
+                        <i class="fas fa-times remove-bookmark" data-key="${key}"></i>
+                    </div>
+                    <div class="arabic" style="font-size: 20px;">${verse.arabicText}</div>
+                    <div class="translation" style="font-size: 14px;">${verse.translationText}</div>
+                `;
+                
+                bookmarkDiv.addEventListener('click', function(e) {
+                    if (!e.target.classList.contains('remove-bookmark')) {
+                        document.getElementById('surahSelect').value = verse.surah;
+                        displaySurah(verse.surah);
+                        document.getElementById('bookmarksModal').classList.remove('show');
+                        
+                        setTimeout(() => {
+                            const verseElement = document.querySelector(`.verse:nth-child(${verse.verse})`);
+                            if (verseElement) {
+                                verseElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                verseElement.style.animation = 'highlight 2s';
+                            }
+                        }, 100);
+                    }
+                });
+                
+                bookmarksList.appendChild(bookmarkDiv);
+            }
+            
+            // Add remove bookmark functionality
+            document.querySelectorAll('.remove-bookmark').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const key = this.dataset.key;
+                    delete bookmarkedVerses[key];
+                    localStorage.setItem('bookmarkedVerses', JSON.stringify(bookmarkedVerses));
+                    this.closest('.bookmarked-verse').remove();
+                    
+                    if (Object.keys(bookmarkedVerses).length === 0) {
+                        bookmarksList.innerHTML = '<p style="text-align: center; color: var(--text-color);">No bookmarked verses yet</p>';
+                    }
+                    
+                    // Update the current verse if it's displayed
+                    const [surah, verse] = key.split(':');
+                    if (document.getElementById('surahSelect').value === surah) {
+                        const verseElement = document.querySelector(`.verse:nth-child(${verse})`);
+                        if (verseElement) {
+                            verseElement.classList.remove('bookmarked');
+                            const menuItem = verseElement.querySelector('[data-action="bookmark"]');
+                            if (menuItem) {
+                                menuItem.innerHTML = '<i class="fas fa-bookmark"></i><span>Bookmark Ayah</span>';
+                            }
+                        }
+                    }
+                });
+            });
+            
+            document.getElementById('bookmarksModal').classList.add('show');
+        });
+
+        // Close bookmarks modal
+        document.getElementById('closeBookmarks').addEventListener('click', function() {
+            document.getElementById('bookmarksModal').classList.remove('show');
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(e) {
+            if (e.target.classList.contains('bookmarks-modal')) {
+                document.getElementById('bookmarksModal').classList.remove('show');
+            }
+        });
+
+        // Simplified theme functionality
+        const themeButtons = document.querySelectorAll('.theme-btn');
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        
+        themeButtons.forEach(btn => {
+            if (btn.dataset.theme === savedTheme) {
+                btn.classList.add('active');
+            }
+        });
+
+        themeButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const theme = btn.dataset.theme;
+                document.documentElement.setAttribute('data-theme', theme);
+                localStorage.setItem('theme', theme);
+                
+                themeButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+        });
+
+    </script>
+
+</body>
+</html>
