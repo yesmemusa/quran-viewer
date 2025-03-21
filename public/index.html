@@ -32,7 +32,7 @@
             --container-bg: #ffffff;
             --verse-bg: #f8f9fa;
             --border-color: #eee;
-            --arabic-color: #1a5f7a;
+            --arabic-color: #571e1e;
             --translation-color: #2c3e50;
             --highlight-color: rgba(255, 255, 0, 0.3);
             --menu-hover: #f8f9fa;
@@ -971,6 +971,255 @@
                 display: none !important;
             }
         }
+
+        /* Add these styles in the <style> section */
+        .logos-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            margin: 0 10px;
+        }
+
+        .logo-item {
+            color: white;
+            font-size: 1.2rem;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+            text-decoration: none;
+        }
+
+        .logo-item:hover {
+            transform: translateY(-3px) scale(1.1);
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Update mobile responsiveness for logos */
+        @media (max-width: 768px) {
+            .logos-container {
+                width: 100%;
+                max-width: 300px;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+                padding: 8px;
+            }
+
+            .logo-item {
+                font-size: 1rem;
+                width: 30px;
+                height: 30px;
+            }
+        }
+
+        .settings-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .settings-modal.show {
+            display: flex;
+        }
+
+        .settings-content {
+            background: var(--container-bg);
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 90%;
+            width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            color: var(--text-color);
+        }
+
+        .settings-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .settings-header h3 {
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        .settings-close {
+            cursor: pointer;
+            font-size: 1.5rem;
+            padding: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .settings-close:hover {
+            transform: rotate(90deg);
+        }
+
+        .settings-section {
+            margin-bottom: 30px;
+        }
+
+        .settings-section h4 {
+            margin-bottom: 15px;
+            color: var(--text-color);
+        }
+
+        .settings-section .font-size-control {
+            background: var(--verse-bg);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .settings-section .toggle-container {
+            background: var(--verse-bg);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .settings-section .theme-controls {
+            background: var(--verse-bg);
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .islamic-calendar-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .islamic-calendar-modal.show {
+            display: flex;
+        }
+
+        .calendar-content {
+            background: var(--container-bg);
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 90%;
+            width: 400px;
+            position: relative;
+            color: var(--text-color);
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .calendar-header h3 {
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        .calendar-close {
+            cursor: pointer;
+            font-size: 1.5rem;
+            padding: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .calendar-close:hover {
+            transform: rotate(90deg);
+        }
+
+        .current-date {
+            margin-bottom: 30px;
+        }
+
+        .date-box {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: var(--verse-bg);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .date-box:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .date-box i {
+            font-size: 2.5rem;
+            color: var(--arabic-color);
+        }
+
+        .date-info h4 {
+            margin: 0 0 10px 0;
+            color: var(--text-color);
+            font-size: 1.2rem;
+        }
+
+        .date-info p {
+            margin: 0;
+            font-size: 1.3rem;
+            color: var(--arabic-color);
+            font-weight: 500;
+        }
+
+        /* Remove unnecessary calendar grid styles */
+        .calendar-grid,
+        .calendar-navigation,
+        .weekdays,
+        .days {
+            display: none;
+        }
+
+        /* Remove prayer times modal styles */
+        .prayer-times-modal,
+        .prayer-times-modal.show,
+        .prayer-times-content,
+        .prayer-times-header,
+        .prayer-times-header h3,
+        .prayer-times-close,
+        .prayer-times-close:hover,
+        .prayer-time-item,
+        .prayer-time-item:hover,
+        .prayer-name,
+        .prayer-name i,
+        .prayer-time,
+        .location-info {
+            display: none;
+        }
+
     </style>
 </head>
 <body>
@@ -981,34 +1230,61 @@
             <i class="fas fa-book-quran"></i>
             <span>Quran Viewer</span>
         </div>
+
+        <!-- Update the logos container -->
+        <div class="logos-container">
+            <a href="#" class="logo-item" title="Islamic Calendar">
+                <i class="fas fa-calendar-alt"></i>
+            </a>
+            <a href="#" class="logo-item" id="showSettings" title="Settings">
+                <i class="fas fa-cog"></i>
+            </a>
+        </div>
+
+        <!-- Remove font controls from navbar -->
         <label style="color: white;">Surah:</label>
         <select id="surahSelect"></select>
 
-        <div class="font-size-control">
-            <label>Arabic Size:</label>
-            <input type="range" class="font-size-slider" id="arabicFontSize" min="16" max="48" value="24">
-            <span class="font-size-value" id="arabicFontValue">24px</span>
-        </div>
-
-        <div class="font-size-control">
-            <label>Translation Size:</label>
-            <input type="range" class="font-size-slider" id="translationFontSize" min="12" max="36" value="18">
-            <span class="font-size-value" id="translationFontValue">18px</span>
-        </div>
-
-        <div class="toggle-container">
-            <i class="fas fa-language"></i>
-            <label>Show Translation</label>
-            <input type="checkbox" id="toggleTranslation" checked>
-        </div>
-
-        <div class="theme-controls">
-            <button class="theme-btn" data-theme="light" style="background: #f5f7fa;">
-                <i class="fas fa-sun" style="color: #2c3e50;"></i>
-            </button>
-            <button class="theme-btn" data-theme="dark" style="background: #121212;">
-                <i class="fas fa-moon" style="color: #e6e6e6;"></i>
-            </button>
+        <!-- Add settings modal -->
+        <div class="settings-modal" id="settingsModal">
+            <div class="settings-content">
+                <div class="settings-header">
+                    <h3>Settings</h3>
+                    <i class="fas fa-times settings-close" id="closeSettings"></i>
+                </div>
+                <div class="settings-body">
+                    <div class="settings-section">
+                        <h4>Font Size Controls</h4>
+                        <div class="font-size-control">
+                            <label>Arabic Size:</label>
+                            <input type="range" class="font-size-slider" id="arabicFontSize" min="16" max="48" value="24">
+                            <span class="font-size-value" id="arabicFontValue">24px</span>
+                        </div>
+                        <div class="font-size-control">
+                            <label>Translation Size:</label>
+                            <input type="range" class="font-size-slider" id="translationFontSize" min="12" max="36" value="18">
+                            <span class="font-size-value" id="translationFontValue">18px</span>
+                        </div>
+                    </div>
+                    <div class="settings-section">
+                        <h4>Display Options</h4>
+                        <div class="toggle-container">
+                            <i class="fas fa-language"></i>
+                            <label>Show Translation</label>
+                            <input type="checkbox" id="toggleTranslation" checked>
+                        </div>
+                        <div class="theme-controls">
+                            <h4>Theme</h4>
+                            <button class="theme-btn" data-theme="light" style="background: #f5f7fa;">
+                                <i class="fas fa-sun" style="color: #2c3e50;"></i>
+                            </button>
+                            <button class="theme-btn" data-theme="dark" style="background: #121212;">
+                                <i class="fas fa-moon" style="color: #e6e6e6;"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <button class="bookmark-btn" id="showBookmarks">
@@ -1083,6 +1359,28 @@
         <i class="fas fa-desktop"></i>
         <h2>Desktop Only</h2>
         <p>This Quran viewer is optimized for desktop viewing. Please access it from a computer or laptop for the best experience.</p>
+    </div>
+
+    <!-- Add this modal before the closing body tag -->
+    <div class="islamic-calendar-modal" id="islamicCalendarModal">
+        <div class="calendar-content">
+            <div class="calendar-header">
+                <h3>Islamic Date</h3>
+                <i class="fas fa-times calendar-close" id="closeCalendar"></i>
+            </div>
+            <div class="calendar-body">
+                <div class="current-date">
+                    <div class="date-box">
+                        <i class="fas fa-calendar-alt"></i>
+                        <div class="date-info">
+                            <h4>Current Islamic Date</h4>
+                            <p id="hijriDate">Loading...</p>
+                            <p id="gregorianDate" style="font-size: 0.9rem; opacity: 0.8; margin-top: 5px;"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -1207,54 +1505,88 @@
             "114": "An-Nas"
         };
 
+        // Add this before the Promise.all
+        console.log('Current path:', window.location.pathname);
+        console.log('Attempting to load:', 
+            new URL('quran.json', window.location.href).href,
+            new URL('tarjuma.json', window.location.href).href
+        );
+
         // Fetch Quran JSON and Translation JSON
         Promise.all([
-            fetch('quran.json')
+            fetch(new URL('quran.json', window.location.href).href)
                 .then(response => {
+                    console.log('Quran fetch response:', response.status, response.statusText);
                     if (!response.ok) {
                         throw new Error(`HTTP error! status: ${response.status}`);
                     }
-                    return response.json();
+                    return response.text();
+                })
+                .then(text => {
+                    try {
+                        const data = JSON.parse(text);
+                        console.log('Quran data parsed successfully');
+                        return data;
+                    } catch (e) {
+                        console.error('JSON parse error:', e);
+                        throw new Error('Invalid JSON format in quran.json: ' + e.message);
+                    }
                 })
                 .catch(error => {
                     console.error('Error loading quran.json:', error);
                     document.getElementById("messageContainer").innerHTML = `
                         <div class="message" style="color: #dc3545;">
                             <i class="fas fa-exclamation-circle"></i>
-                            Error loading Quran data. Please make sure quran.json is present.
+                            ${error.message}
                         </div>
                     `;
                     return {};
                 }),
-            fetch('tarjuma.json')
+            fetch(new URL('tarjuma.json', window.location.href).href)
                 .then(response => {
+                    console.log('Translation fetch response:', response.status, response.statusText);
                     if (!response.ok) {
                         throw new Error(`HTTP error! status: ${response.status}`);
                     }
-                    return response.json();
+                    return response.text();
+                })
+                .then(text => {
+                    try {
+                        const data = JSON.parse(text);
+                        console.log('Translation data parsed successfully');
+                        return data;
+                    } catch (e) {
+                        console.error('JSON parse error:', e);
+                        throw new Error('Invalid JSON format in tarjuma.json: ' + e.message);
+                    }
                 })
                 .catch(error => {
                     console.error('Error loading tarjuma.json:', error);
+                    document.getElementById("messageContainer").innerHTML = `
+                        <div class="message" style="color: #dc3545;">
+                            <i class="fas fa-exclamation-circle"></i>
+                            ${error.message}
+                        </div>
+                    `;
                     return {};
                 })
         ]).then(([quran, translation]) => {
             quranData = quran;
             translationData = translation;
             
-            // Check if data is loaded
+            debugQuranData();  // Debug the loaded data
+            
             if (Object.keys(quranData).length === 0) {
-                console.error('No Quran data loaded');
-                return;
+                throw new Error('No Quran data loaded');
             }
             
             populateSurahDropdown();
-            console.log('Data loaded successfully');
         }).catch(error => {
-            console.error('Error in Promise.all:', error);
+            console.error('Error in data loading:', error);
             document.getElementById("messageContainer").innerHTML = `
                 <div class="message" style="color: #dc3545;">
                     <i class="fas fa-exclamation-circle"></i>
-                    Error loading data. Please check the console for details.
+                    ${error.message}. Please check the console for details.
                 </div>
             `;
         });
@@ -1263,11 +1595,45 @@
             let surahSelect = document.getElementById("surahSelect");
             surahSelect.innerHTML = '<option value="">Select a Surah</option>';
 
-            for (let surah in quranData) {
-                let option = document.createElement("option");
-                option.value = surah;
-                option.textContent = `${surah}. ${surahNames[surah]}`;
-                surahSelect.appendChild(option);
+            console.log('Populating dropdown with surahs:', Object.keys(quranData).length);
+            
+            try {
+                for (let surah in quranData) {
+                    if (quranData.hasOwnProperty(surah)) {
+                        let option = document.createElement("option");
+                        option.value = surah;
+                        option.textContent = `${surah}. ${surahNames[surah] || `Surah ${surah}`}`;
+                        surahSelect.appendChild(option);
+                    }
+                }
+                console.log('Dropdown populated successfully');
+            } catch (error) {
+                console.error('Error populating dropdown:', error);
+                document.getElementById("messageContainer").innerHTML = `
+                    <div class="message" style="color: #dc3545;">
+                        <i class="fas fa-exclamation-circle"></i>
+                        Error populating surah list. Please refresh the page.
+                    </div>
+                `;
+            }
+        }
+
+        // Add this function to help debug the data
+        function debugQuranData() {
+            console.log('Quran Data Structure:');
+            console.log('Total surahs:', Object.keys(quranData).length);
+            if (Object.keys(quranData).length > 0) {
+                const firstSurah = Object.keys(quranData)[0];
+                const firstVerse = quranData[firstSurah][0];
+                console.log('First surah structure:', {
+                    surahNumber: firstSurah,
+                    versesCount: quranData[firstSurah].length,
+                    sampleVerse: {
+                        chapter: firstVerse.chapter,
+                        verse: firstVerse.verse,
+                        text: firstVerse.text || ''
+                    }
+                });
             }
         }
 
@@ -1293,26 +1659,57 @@
                 let verses = quranData[surahNumber];
                 let translations = translationData[surahNumber] || [];
 
-                verses.forEach((verse, index) => {
+                // Get saved font sizes
+                const defaultArabicSize = 24;
+                const defaultTranslationSize = 18;
+                
+                // Load saved font sizes or use defaults
+                const savedArabicSize = localStorage.getItem('arabicFontSize') || defaultArabicSize;
+                const savedTranslationSize = localStorage.getItem('translationFontSize') || defaultTranslationSize;
+                
+                // Create a map of translations by verse number for easier lookup
+                const translationMap = {};
+                translations.forEach(trans => {
+                    translationMap[trans.verse] = trans;
+                });
+
+                verses.forEach((verse) => {
                     let verseDiv = document.createElement("div");
                     verseDiv.classList.add("verse");
 
-                    // Add three dots menu
+                    // Create verse number
+                    let verseNumberDiv = document.createElement("div");
+                    verseNumberDiv.classList.add("verse-number");
+                    verseNumberDiv.innerHTML = `<i class="fas fa-star"></i> Verse ${verse.verse}`;
+                    
+                    // Create Arabic text with saved font size
+                    let arabicText = document.createElement("div");
+                    arabicText.classList.add("arabic");
+                    arabicText.textContent = verse.text || "";
+                    arabicText.style.fontSize = savedArabicSize + "px";
+                    
+                    // Create translation text with saved font size
+                    let translationText = document.createElement("div");
+                    translationText.classList.add("translation");
+                    const translation = translationMap[verse.verse];
+                    translationText.textContent = translation ? translation.text : "";
+                    translationText.style.fontSize = savedTranslationSize + "px";
+
+                    // Create options menu
                     let optionsDiv = document.createElement("div");
                     optionsDiv.classList.add("verse-options");
                     optionsDiv.innerHTML = '<i class="fas fa-ellipsis-v"></i>';
-                    
-                    // Create options menu
+
                     let optionsMenu = document.createElement("div");
                     optionsMenu.classList.add("options-menu");
                     optionsMenu.innerHTML = `
                         <div class="options-menu-item" data-action="screenshot">
                             <i class="fas fa-camera"></i>
-                            <span>Screenshot Ayah</span>
+                            <span>Take Screenshot</span>
                         </div>
                         <div class="options-menu-item" data-action="copy-arabic">
                             <i class="fas fa-copy"></i>
-                            <span>Copy Arabic Text</span>
+                            <span>Copy Arabic</span>
                         </div>
                         <div class="options-menu-item" data-action="copy-translation">
                             <i class="fas fa-copy"></i>
@@ -1320,7 +1717,7 @@
                         </div>
                         <div class="options-menu-item" data-action="share">
                             <i class="fas fa-share-alt"></i>
-                            <span>Share Ayah</span>
+                            <span>Share</span>
                         </div>
                         <div class="options-menu-item" data-action="bookmark">
                             <i class="fas fa-bookmark"></i>
@@ -1328,35 +1725,18 @@
                         </div>
                     `;
 
-                    optionsDiv.appendChild(optionsMenu);
-
-                    let arabicText = document.createElement("div");
-                    arabicText.classList.add("arabic");
-                    arabicText.style.fontSize = document.getElementById("arabicFontSize").value + "px";
-                    arabicText.innerHTML = `${verse.text} <span class="verse-end-symbol">۝</span>`;
-
-                    let translationText = document.createElement("div");
-                    translationText.classList.add("translation");
-                    translationText.style.fontSize = document.getElementById("translationFontSize").value + "px";
-                    translationText.textContent = translations[index]?.text || "Translation not available";
-
-                    // Add verse number
-                    let verseNumber = document.createElement("div");
-                    verseNumber.classList.add("verse-number");
-                    verseNumber.innerHTML = `<i class="fas fa-bookmark"></i> Ayah ${index + 1}`;
-
-                    verseDiv.appendChild(optionsDiv);
+                    // Append all elements
+                    verseDiv.appendChild(verseNumberDiv);
                     verseDiv.appendChild(arabicText);
                     verseDiv.appendChild(translationText);
-                    verseDiv.appendChild(verseNumber);
+                    verseDiv.appendChild(optionsDiv);
+                    verseDiv.appendChild(optionsMenu);
                     quranContainer.appendChild(verseDiv);
 
                     // Add click event for mobile
                     verseDiv.addEventListener("click", function(e) {
-                        // Only handle click if we're on mobile (screen width <= 768px)
                         if (window.innerWidth <= 768) {
                             e.stopPropagation();
-                            // Close all other menus
                             document.querySelectorAll('.options-menu.show').forEach(menu => {
                                 if (menu !== optionsMenu) {
                                     menu.classList.remove('show');
@@ -1368,10 +1748,8 @@
 
                     // Add click event for options menu (desktop)
                     optionsDiv.addEventListener("click", function(e) {
-                        // Only handle click if we're on desktop (screen width > 768px)
                         if (window.innerWidth > 768) {
                             e.stopPropagation();
-                            // Close all other menus
                             document.querySelectorAll('.options-menu.show').forEach(menu => {
                                 if (menu !== optionsMenu) {
                                     menu.classList.remove('show');
@@ -1383,7 +1761,8 @@
 
                     // Handle menu item clicks
                     optionsMenu.querySelectorAll('.options-menu-item').forEach(item => {
-                        item.addEventListener("click", function() {
+                        item.addEventListener("click", function(e) {
+                            e.stopPropagation();
                             const action = this.dataset.action;
                             switch(action) {
                                 case 'screenshot':
@@ -1407,7 +1786,7 @@
                     });
 
                     // Check if verse is bookmarked
-                    const key = `${surahNumber}:${index + 1}`;
+                    const key = `${surahNumber}:${verse.verse}`;
                     if (bookmarkedVerses[key]) {
                         verseDiv.classList.add('bookmarked');
                         const bookmarkMenuItem = verseDiv.querySelector('[data-action="bookmark"]');
@@ -1440,22 +1819,40 @@
             });
         }
 
-        // Change Font Sizes Dynamically
+        // Initialize font size values from localStorage or use defaults
+        const defaultArabicSize = 24;
+        const defaultTranslationSize = 18;
+        
+        // Load saved font sizes or use defaults
+        const savedArabicSize = localStorage.getItem('arabicFontSize') || defaultArabicSize;
+        const savedTranslationSize = localStorage.getItem('translationFontSize') || defaultTranslationSize;
+        
+        // Set initial values
+        document.getElementById("arabicFontSize").value = savedArabicSize;
+        document.getElementById("translationFontSize").value = savedTranslationSize;
+        document.getElementById("arabicFontValue").textContent = savedArabicSize + "px";
+        document.getElementById("translationFontValue").textContent = savedTranslationSize + "px";
+        
+        // Apply saved font sizes to existing elements
+        document.querySelectorAll(".arabic").forEach(el => el.style.fontSize = savedArabicSize + "px");
+        document.querySelectorAll(".translation").forEach(el => el.style.fontSize = savedTranslationSize + "px");
+
+        // Change Font Sizes Dynamically and Save to localStorage
         document.getElementById("arabicFontSize").addEventListener("input", function () {
-            const value = this.value + "px";
-            document.getElementById("arabicFontValue").textContent = value;
-            document.querySelectorAll(".arabic").forEach(el => el.style.fontSize = value);
+            const value = this.value;
+            const valueWithPx = value + "px";
+            document.getElementById("arabicFontValue").textContent = valueWithPx;
+            document.querySelectorAll(".arabic").forEach(el => el.style.fontSize = valueWithPx);
+            localStorage.setItem('arabicFontSize', value);
         });
 
         document.getElementById("translationFontSize").addEventListener("input", function () {
-            const value = this.value + "px";
-            document.getElementById("translationFontValue").textContent = value;
-            document.querySelectorAll(".translation").forEach(el => el.style.fontSize = value);
+            const value = this.value;
+            const valueWithPx = value + "px";
+            document.getElementById("translationFontValue").textContent = valueWithPx;
+            document.querySelectorAll(".translation").forEach(el => el.style.fontSize = valueWithPx);
+            localStorage.setItem('translationFontSize', value);
         });
-
-        // Initialize font size values
-        document.getElementById("arabicFontValue").textContent = document.getElementById("arabicFontSize").value + "px";
-        document.getElementById("translationFontValue").textContent = document.getElementById("translationFontSize").value + "px";
 
         // Screenshot functionality
         function showScreenshot(arabicText, translationText) {
@@ -1658,8 +2055,8 @@
         // Simplified theme functionality
         const themeButtons = document.querySelectorAll('.theme-btn');
 
-        // Load saved theme
-        const savedTheme = localStorage.getItem('theme') || 'light';
+        // Load saved theme or use dark as default
+        const savedTheme = localStorage.getItem('theme') || 'dark';
         document.documentElement.setAttribute('data-theme', savedTheme);
         
         themeButtons.forEach(btn => {
@@ -1678,6 +2075,71 @@
                 btn.classList.add('active');
             });
         });
+
+        // Settings modal functionality
+        document.getElementById('showSettings').addEventListener('click', function() {
+            document.getElementById('settingsModal').classList.add('show');
+        });
+
+        document.getElementById('closeSettings').addEventListener('click', function() {
+            document.getElementById('settingsModal').classList.remove('show');
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(e) {
+            if (e.target.classList.contains('settings-modal')) {
+                document.getElementById('settingsModal').classList.remove('show');
+            }
+        });
+
+        // Islamic Calendar functionality
+        document.querySelector('[title="Islamic Calendar"]').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('islamicCalendarModal').classList.add('show');
+            updateHijriDate();
+        });
+
+        document.getElementById('closeCalendar').addEventListener('click', function() {
+            document.getElementById('islamicCalendarModal').classList.remove('show');
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(e) {
+            if (e.target.classList.contains('islamic-calendar-modal')) {
+                document.getElementById('islamicCalendarModal').classList.remove('show');
+            }
+        });
+
+        function updateHijriDate() {
+            // Get current date
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = today.getMonth() + 1;
+            const day = today.getDate();
+            
+            // Format Gregorian date
+            const gregorianDate = today.toLocaleDateString('en-US', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            // Fetch Hijri date from Aladhan API
+            fetch(`https://api.aladhan.com/v1/gToH/${day}-${month}-${year}`)
+                .then(response => response.json())
+                .then(data => {
+                    const hijri = data.data.hijri;
+                    document.getElementById('hijriDate').textContent = 
+                        `${hijri.day} ${hijri.month.en} ${hijri.year} AH`;
+                    document.getElementById('gregorianDate').textContent = gregorianDate;
+                })
+                .catch(error => {
+                    console.error('Error fetching Hijri date:', error);
+                    document.getElementById('hijriDate').textContent = 'Error loading date';
+                    document.getElementById('gregorianDate').textContent = '';
+                });
+        }
 
     </script>
 
