@@ -928,13 +928,55 @@
 
         // Fetch Quran JSON and Translation JSON
         Promise.all([
-            fetch('quran.json').then(response => response.json()),
-            fetch('tarjuma.json').then(response => response.json())
+            fetch('quran.json')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .catch(error => {
+                    console.error('Error loading quran.json:', error);
+                    document.getElementById("messageContainer").innerHTML = `
+                        <div class="message" style="color: #dc3545;">
+                            <i class="fas fa-exclamation-circle"></i>
+                            Error loading Quran data. Please make sure quran.json is present.
+                        </div>
+                    `;
+                    return {};
+                }),
+            fetch('tarjuma.json')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .catch(error => {
+                    console.error('Error loading tarjuma.json:', error);
+                    return {};
+                })
         ]).then(([quran, translation]) => {
             quranData = quran;
             translationData = translation;
+            
+            // Check if data is loaded
+            if (Object.keys(quranData).length === 0) {
+                console.error('No Quran data loaded');
+                return;
+            }
+            
             populateSurahDropdown();
-        }).catch(error => console.error('Error loading JSON files:', error));
+            console.log('Data loaded successfully');
+        }).catch(error => {
+            console.error('Error in Promise.all:', error);
+            document.getElementById("messageContainer").innerHTML = `
+                <div class="message" style="color: #dc3545;">
+                    <i class="fas fa-exclamation-circle"></i>
+                    Error loading data. Please check the console for details.
+                </div>
+            `;
+        });
 
         function populateSurahDropdown() {
             let surahSelect = document.getElementById("surahSelect");
